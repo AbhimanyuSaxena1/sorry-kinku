@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
+import { notifyClick } from "@/utils/notify"
 
 export default function ApologyPage({ setCurrentPage }) {
   const [currentText, setCurrentText] = useState(0)
@@ -16,6 +17,11 @@ export default function ApologyPage({ setCurrentPage }) {
   }, [])
 
   const handleContinue = () => {
+    notifyClick({
+      buttonName: "Read my letter...",
+      pageName: "Apology Page",
+      details: "Visitor read through the apology text and clicked 'Read my letter...'.",
+    })
     setCurrentPage("letter")
   }
 

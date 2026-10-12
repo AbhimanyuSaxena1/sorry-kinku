@@ -1,9 +1,15 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { notifyClick } from "@/utils/notify"
 
 export default function OpeningPage({ setCurrentPage, setMusicPlaying, setShowMusicPlayer }) {
   const handleLetMeTalk = () => {
+    notifyClick({
+      buttonName: "Let me talk...",
+      pageName: "Opening Page",
+      details: "Visitor clicked 'Let me talk...' and moved to the Diary page.",
+    })
     setMusicPlaying(true)
     setShowMusicPlayer(true)
     setTimeout(() => {

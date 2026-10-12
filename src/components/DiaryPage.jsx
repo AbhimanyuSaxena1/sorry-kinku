@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
+import { notifyClick } from "@/utils/notify"
 
 export default function DiaryPage({ setCurrentPage }) {
   const [showContent, setShowContent] = useState(false)
@@ -14,6 +15,11 @@ export default function DiaryPage({ setCurrentPage }) {
   }, [])
 
   const handleContinue = () => {
+    notifyClick({
+      buttonName: "Continue reading...",
+      pageName: "Diary Page",
+      details: "Visitor finished reading the diary intro and clicked 'Continue reading...'.",
+    })
     setCurrentPage("apology")
   }
 

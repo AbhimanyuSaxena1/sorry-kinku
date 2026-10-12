@@ -3,6 +3,7 @@
 import { useRef, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Volume2, VolumeX } from "lucide-react"
+import { notifyClick } from "@/utils/notify"
 
 export default function MusicPlayer({ musicPlaying, setMusicPlaying }) {
   const audioRef = useRef(null)
@@ -19,7 +20,13 @@ export default function MusicPlayer({ musicPlaying, setMusicPlaying }) {
   }, [musicPlaying])
 
   const toggleMusic = () => {
-    setMusicPlaying(!musicPlaying)
+    const nextState = !musicPlaying
+    setMusicPlaying(nextState)
+    notifyClick({
+      buttonName: nextState ? "Play Music 🎵" : "Mute Music 🔇",
+      pageName: "Music Player",
+      details: nextState ? "Visitor clicked music button to play song." : "Visitor clicked music button to mute song.",
+    })
   }
 
   return (

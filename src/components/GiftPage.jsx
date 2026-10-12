@@ -2,12 +2,18 @@
 
 import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
+import { notifyClick } from "@/utils/notify"
 
 export default function GiftPage() {
   const [giftOpened, setGiftOpened] = useState(false)
   const [showSurprise, setShowSurprise] = useState(false)
 
   const openGift = () => {
+    notifyClick({
+      buttonName: "Click to open! 🎁",
+      pageName: "Gift Page",
+      details: "Visitor clicked the gift box and opened the surprise flower & love message! 🌹💖",
+    })
     setGiftOpened(true)
     setTimeout(() => {
       setShowSurprise(true)

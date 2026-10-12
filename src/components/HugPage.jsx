@@ -3,12 +3,18 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
 import { Heart } from "lucide-react"
+import { notifyClick } from "@/utils/notify"
 
 export default function HugPage({ setCurrentPage }) {
   const [hearts, setHearts] = useState([])
   const [showHearts, setShowHearts] = useState(false)
 
   const sendHug = () => {
+    notifyClick({
+      buttonName: "Send a hug",
+      pageName: "Hug Page",
+      details: "Visitor clicked 'Send a hug' and filled the screen with hearts! 🤗💖",
+    })
 
     setShowHearts(true)
     const newHearts = []

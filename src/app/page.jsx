@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import StarryBackground from "@/components/StarryBackground"
 import OpeningPage from "@/components/OpeningPage"
@@ -10,11 +10,23 @@ import LetterPage from "@/components/LetterPage"
 import HugPage from "@/components/HugPage"
 import GiftPage from "@/components/GiftPage"
 import MusicPlayer from "@/components/MusicPlayer"
+import { notifyClick } from "@/utils/notify"
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState("opening")
   const [musicPlaying, setMusicPlaying] = useState(false)
   const [showMusicPlayer, setShowMusicPlayer] = useState(false)
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && !sessionStorage.getItem("sorry_site_opened")) {
+      sessionStorage.setItem("sorry_site_opened", "true")
+      notifyClick({
+        buttonName: "Site Opened",
+        pageName: "Landing Page",
+        details: "Visitor opened your sorry website! 🌸",
+      })
+    }
+  }, [])
 
   const pages = {
     opening: OpeningPage,

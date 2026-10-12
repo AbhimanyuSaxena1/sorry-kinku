@@ -1,9 +1,15 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { notifyClick } from "@/utils/notify"
 
 export default function LetterPage({ setCurrentPage }) {
   const handleContinue = () => {
+    notifyClick({
+      buttonName: "I need you...",
+      pageName: "Letter / Memories Page",
+      details: "Visitor read your letter, looked at the memories, and clicked 'I need you...'.",
+    })
     setCurrentPage("hug")
   }
 
@@ -41,6 +47,13 @@ export default function LetterPage({ setCurrentPage }) {
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                notifyClick({
+                  buttonName: `Memory Photo #${i}`,
+                  pageName: "Letter / Memories Page",
+                  details: `Visitor tapped to look closer at memory polaroid photo #${i}.`,
+                })
+              }}
             >
               {/* Main polaroid container */}
               <div className="bg-white p-3 rounded-2xl shadow-lg transform transition-all duration-300 group-hover:shadow-pink-200/40 max-w-[200px]">
