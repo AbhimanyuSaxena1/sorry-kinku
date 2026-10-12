@@ -1,5 +1,8 @@
 import { Resend } from "resend";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 export async function POST(req) {
   try {
     const body = await req.json();
