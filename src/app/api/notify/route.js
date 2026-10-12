@@ -127,20 +127,33 @@ export async function POST(req) {
 </html>
     `;
 
-    const { data, error } = await resend.emails.send({
+    let sendResult = await resend.emails.send({
       from: fromEmail,
       to: [toEmail],
       subject,
       html: htmlContent,
     });
 
-    if (error) {
-      console.error("[Notify API] Resend error:", error);
-      return Response.json({ success: false, error }, { status: 500 });
+    // If Resend free tier restricts to only the registered account email
+    if (sendResult.error && sendResult.error.message && sendResult.error.message.includes("You can only send testing emails to your own email address")) {
+      const match = sendResult.error.message.match(/\(([^)]+)\)/);
+      const fallbackEmail = match ? match[1] : "abhimanyuscse2335@svvv.edu.in";
+      console.warn(`[Notify API] Retrying delivery to verified Resend account: ${fallbackEmail}`);
+      sendResult = await resend.emails.send({
+        from: fromEmail,
+        to: [fallbackEmail],
+        subject,
+        html: htmlContent,
+      });
+    }
+
+    if (sendResult.error) {
+      console.error("[Notify API] Resend error:", sendResult.error);
+      return Response.json({ success: false, error: sendResult.error }, { status: 500 });
     }
 
     console.log(`[Notify API] Email notification sent successfully: ${buttonName}`);
-    return Response.json({ success: true, data });
+    return Response.json({ success: true, data: sendResult.data });
   } catch (err) {
     console.error("[Notify API] Server exception:", err);
     return Response.json({ success: false, error: err.message }, { status: 500 });
